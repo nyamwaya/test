@@ -1,11 +1,10 @@
-# .github/workflows/get-simulator.yml
 on: workflow_dispatch
 jobs:
-  download:
-    runs-on: macos-15
+  find:
+    runs-on: macos-26
     steps:
-      - run: xcodebuild -downloadPlatform iOS -exportPath ~/runtime -buildVersion 26.5
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ios-26.5-runtime
-          path: ~/runtime
+      - run: find /Library/Developer/CoreSimulator -iname "*26.5*" 2>/dev/null
+      - run: find /Library/Developer/CoreSimulator -iname "*.dmg" -o -iname "*.simruntime" 2>/dev/null
+      - run: ls -la /Library/Developer/CoreSimulator/Images 2>/dev/null || echo "no Images dir"
+      - run: ls -la /Library/Developer/CoreSimulator/Volumes 2>/dev/null || echo "no Volumes dir"
+      - run: xcrun simctl runtime list -v 2>/dev/null || echo "simctl runtime subcommand not available"
