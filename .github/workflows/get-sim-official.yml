@@ -1,0 +1,11 @@
+# .github/workflows/get-simulator.yml
+on: workflow_dispatch
+jobs:
+  download:
+    runs-on: macos-15
+    steps:
+      - run: xcodebuild -downloadPlatform iOS -exportPath ~/runtime -buildVersion 26.5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-26.5-runtime
+          path: ~/runtime
