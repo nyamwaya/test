@@ -1,0 +1,13 @@
+on: workflow_dispatch
+jobs:
+  export:
+    runs-on: macos-26
+    steps:
+      - run: |
+          find "/Applications/Xcode_26.5.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes" -maxdepth 1
+      - run: |
+          cp -R "/Applications/Xcode_26.5.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime" ~/runtime
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-26.5-runtime
+          path: ~/runtime
