@@ -1,10 +1,13 @@
 on: workflow_dispatch
 jobs:
-  find:
+  export:
     runs-on: macos-26
     steps:
-      - run: find /Library/Developer/CoreSimulator -iname "*26.5*" 2>/dev/null
-      - run: find /Library/Developer/CoreSimulator -iname "*.dmg" -o -iname "*.simruntime" 2>/dev/null
-      - run: ls -la /Library/Developer/CoreSimulator/Images 2>/dev/null || echo "no Images dir"
-      - run: ls -la /Library/Developer/CoreSimulator/Volumes 2>/dev/null || echo "no Volumes dir"
-      - run: xcrun simctl runtime list -v 2>/dev/null || echo "simctl runtime subcommand not available"
+      - run: |
+          mkdir -p ~/runtime
+          cp "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/af14d04fa4f5b29c2471951b01491c6403eab68f.asset/AssetData/Restore/iOSSimulatorRuntime_Cryptex.dmg" ~/runtime/iOS_26.5_Simulator_Runtime.dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-26.5-runtime
+          path: ~/runtime
+          retention-days: 1
