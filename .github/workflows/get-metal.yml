@@ -1,9 +1,0 @@
-on: workflow_dispatch
-jobs:
-  find:
-    runs-on: macos-26
-    steps:
-      - run: find /System/Library/AssetsV2 -iname "*Metal*" 2>/dev/null
-      - run: find /System/Library/AssetsV2 -iname "*Toolchain*" 2>/dev/null
-      - run: xcrun xcodebuild -downloadComponent MetalToolchain -exportPath ~/test 2>&1 | head -50
-          

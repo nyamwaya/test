@@ -1,0 +1,11 @@
+on: workflow_dispatch
+jobs:
+  export:
+    runs-on: macos-26
+    steps:
+      - run: xcodebuild -downloadComponent MetalToolchain -exportPath ~/test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: metal-toolchain
+          path: ~/test
+          retention-days: 1
